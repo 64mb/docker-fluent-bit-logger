@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  fluent_bit:
+    build:
+      context: ./docker
+      dockerfile: ./dockerfile
+      args:
+        - REMOTE_PROVIDER_CONFIG=fluent_bit_${REMOTE_PROVIDER:-loki}.conf
+    image: fluent_bit:1.8.12.3-${REMOTE_PROVIDER:-loki}
+    container_name: fluent_bit
+    restart: always
+    environment:
+      - LOGGER_PREFIX=${LOGGER_PREFIX:--}
+
+      - LOGGER_HOST=${LOGGER_HOST:?lost LOGGER_HOST variable}
+      - LOGGER_PASSWORD=${LOGGER_PASSWORD:?lost LOGGER_PASSWORD variable}
+      # - LOGGER_HOST_LEGACY=${LOGGER_HOST_LEGACY:?lost LOGGER_HOST_LEGACY variable}
+      # - LOGGER_PASSWORD_LEGACY=${LOGGER_PASSWORD_LEGACY:?lost LOGGER_PASSWORD_LEGACY variable}
+    ports:
+      - "127.0.0.1:24224:24224"
+      - "127.0.0.1:24224:24224/udp"

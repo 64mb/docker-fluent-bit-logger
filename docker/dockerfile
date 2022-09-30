@@ -1,0 +1,9 @@
+FROM fluent/fluent-bit:1.8.12
+
+ARG REMOTE_PROVIDER_CONFIG
+
+ENV REMOTE_PROVIDER_CONFIG=$REMOTE_PROVIDER_CONFIG
+
+COPY $REMOTE_PROVIDER_CONFIG /fluent-bit/etc/fluent-bit.conf
+COPY fluent_bit_parsers.conf /fluent-bit/etc/fluent-bit-parsers.conf
+COPY fluent_bit.lua /fluent-bit/etc/fluent-bit.lua

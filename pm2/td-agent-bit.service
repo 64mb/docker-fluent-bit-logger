@@ -1,0 +1,17 @@
+[Unit]
+Description=TD Agent Bit
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/td-agent-bit/bin/td-agent-bit -c /etc/td-agent-bit/td-agent-bit.conf
+Restart=always
+Environment=LOGGER_FILE={{LOGGER_FILE}}
+Environment=LOGGER_PREFIX={{LOGGER_PREFIX}}
+Environment=LOGGER_SERVICE={{LOGGER_SERVICE}}
+Environment=LOGGER_HOST={{LOGGER_HOST}}
+Environment=LOGGER_PASSWORD={{LOGGER_PASSWORD}}
+
+[Install]
+WantedBy=multi-user.target
